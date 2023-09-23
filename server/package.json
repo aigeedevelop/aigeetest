@@ -1,0 +1,47 @@
+{
+  "name": "aigee",
+  "version": "1.0.0",
+  "description": "app_server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "aigee"
+  ],
+  "author": "hammer",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "^1.3.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "crawler": "^1.4.0",
+    "crypto-js": "^4.1.1",
+    "ejs": "^3.1.8",
+    "emoji-regex": "^10.2.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.9.0",
+    "formidable": "^2.1.1",
+    "fs": "0.0.1-security",
+    "google-play-billing-validator": "^2.1.3",
+    "googleapis": "^120.0.0",
+    "handlebars": "^4.7.7",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "mysqldump": "^3.2.0",
+    "node-apple-receipt-verify": "^1.12.1",
+    "node-fetch": "^3.3.0",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "stripe": "^12.9.0",
+    "vimeo": "^2.3.1"
+  },
+  "devDependencies": {
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.2"
+  }
+}

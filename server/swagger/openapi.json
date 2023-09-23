@@ -1,0 +1,3037 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "aigee",
+      "description": "aigee API 명세서",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3500"
+      }
+    ],
+    "tags": [
+      {
+        "name": "1. 사용자 웹 인증없음",
+        "description": "사용자 웹에서 로그인을 하지 않고 이용할수 있는 API"
+      },
+      {
+        "name": "2. 사용자 웹 인증있음",
+        "description": "사용자 웹에서 로그인후 이용할수 있는 API"
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "accessId": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "x-access-id"
+        },
+        "accessToken": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "x-access-token"
+        }
+      }
+    },
+    "paths": {
+      "/login": {
+        "post": {
+          "tags": [ "1.1 로그인" ],
+          "summary": "로그인",
+          "description": "로그인",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "email", "password" ],
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "email",
+											"example": "test@naver.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "password",
+											"example": "1234"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {"auth_token":123455, "id": 111, "reg_type": "E"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/createUser": {
+        "post": {
+          "tags": [ "1.2 회원가입" ],
+          "summary": "회원가입",
+          "description": "회원가입",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "reg_type", "platform", "email", "password", "nickname", "profile", "marketing", "country" ],
+                  "properties": {
+                    "reg_type": {
+                      "type": "string",
+                      "description": "E: email, G: 구글, A: 애플",
+											"example": "E"
+                    },
+                    "platform": {
+                      "type": "string",
+                      "description": "A: android, I: ios",
+											"example": "A"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "email",
+											"example": "test@naver.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "password",
+											"example": "1234"
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "description": "닉네임",
+											"example": "홍길동"
+                    },
+                    "profile": {
+                      "type": "string",
+                      "description": "프로필 사진",
+											"example": "202307/0aebf32ca8831c8d02f2e26fca128f60.jpg"
+                    },
+                    "marketing": {
+                      "type": "string",
+                      "description": "마케팅 동의 Y: agree, N: disagree",
+											"example": "Y"
+                    },
+                    "country": {
+                      "type": "string",
+                      "description": "가입국가",
+											"example": "South Korea"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "회원 아이디",
+										"example" : 10001
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getTerm": {
+        "post": {
+          "tags": [ "1.3 이용약관" ],
+          "summary": "이용약관",
+          "description": "이용약관 불러오기",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : [{"id":1,"contents":"약관내용","type":1}]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/updatePassByEmail": {
+        "post": {
+          "tags": [ "1.4 비밀번호 변경" ],
+          "summary": "비밀번호 변경",
+          "description": "이메일로 비밀번호 변경",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "email", "password" ],
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "email",
+											"example": "test@naver.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "비밀번호",
+											"example": "123456"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/uploadImage": {
+        "post": {
+          "tags": [ "1.5 이미지 업로드" ],
+          "summary": "이미지 업로드",
+          "description": "이미지 업로드",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "binary",
+                  "required": [ "file" ],
+                  "properties": {
+                    "email": {
+                      "type": "binary",
+                      "description": "이미지 파일",
+											"example": "binary"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : "image path"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/sendPush": {
+        "post": {
+          "tags": [ "1.6 푸시알림" ],
+          "summary": "관리자에서 푸시알림 발송",
+          "description": "관리자에서 푸시알림 발송",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "type", "target_id" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "10000"
+                    },
+                    "type": {
+                      "type": "number",
+                      "description": "0: 새로운 구독자, 1: 새로운 게시물, 2: 내 게시물에 댓글, 3: 내 게시물에 좋아요, 4: 내 댓글에 답글, 5: 공지사항, 6: 관리자에서 경고 발송, 7: 관리자에서 정지 발송 ",
+											"example": "1"
+                    },
+                    "target_id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/sendPushNotice": {
+        "post": {
+          "tags": [ "1.7 공지사항 푸시알림" ],
+          "summary": "관리자에서 공지사항 등록 푸시알림 발송",
+          "description": "관리자에서 공지사항 등록 푸시알림 발송",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "title", "target_id" ],
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "공지사항 제목",
+											"example": "공지사항 제목"
+                    },
+                    "target_id": {
+                      "type": "string",
+                      "description": "공지사항 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getHomeData": {
+        "post": {
+          "tags": [ "1.8 메인 노출 정보" ],
+          "summary": "메인 노출 정보",
+          "description": "메인 노출 정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "platform" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원아이디",
+											"example": "100000"
+                    },
+                    "platform": {
+                      "type": "string",
+                      "description": "A: android, I: ios ",
+											"example": "A"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : {
+                      "categoryList": 	[],
+                      "followingList": 	[],
+                      "appVersion": 	  {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getMainDataByCategory": {
+        "post": {
+          "tags": [ "1.9 메인 노출 게시물" ],
+          "summary": "메인 노출 게시물",
+          "description": "메인 노출 게시물",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "category", "lastPostId", "userId", "order" ],
+                  "properties": {
+                    "category": {
+                      "type": "string",
+                      "description": "카테고리 index: ['Popular', 'Photos', 'Videos', 'Text', 'Chatgpt', 'Following']",
+											"example": "1"
+                    },
+                    "lastPostId": {
+                      "type": "string",
+                      "description": "메인에 노출된 마지막 게시물 아이디",
+											"example": "100000"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "값이 있으면 새로 등록된 순으로 정렬",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getPostDetail": {
+        "post": {
+          "tags": [ "1.10 게시물 상세" ],
+          "summary": "게시물 상세",
+          "description": "게시물 상세",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "postId" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원아이디",
+											"example": "100000"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : {
+                      "postDetail": 	  {},
+                      "cmtList": 		    [],
+                      "cmtReList": 		  [],
+                      "recommendList":	[],
+                      "promptBoomarks":	[]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/addPostView": {
+        "post": {
+          "tags": [ "1.11 게시물에 머무름시간 추가" ],
+          "summary": "게시물에 머무름시간 추가",
+          "description": "게시물에 머무름시간 추가",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "postId", "stayTime" ],
+                  "properties": {
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    },
+                    "stayTime": {
+                      "type": "number",
+                      "description": "게시물에 머무른 시간 (초)",
+											"example": "60"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/updatePost": {
+        "post": {
+          "tags": [ "1.12 게시물 업로드" ],
+          "summary": "게시물 업로드",
+          "description": "게시물 업로드",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "postId", "type", "title", "content", "prompt", "tags", "imgs", "video_size", "video_duration" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원아이디",
+											"example": "100000"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    },
+                    "type": {
+                      "type": "number",
+                      "description": "1: 직접 포스핑(사진/텍스트), 2: 영상, 3: ai 포스팅",
+											"example": "1"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "제목",
+											"example": "게시물 제목"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "내용",
+											"example": "게시물 내용입니다."
+                    },
+                    "prompt": {
+                      "type": "string",
+                      "description": "프롬프트",
+											"example": "{}"
+                    },
+                    "tags": {
+                      "type": "string",
+                      "description": "태그",
+											"example": "#골프"
+                    },
+                    "imgs": {
+                      "type": "string",
+                      "description": "썸네일 경로",
+											"example": "https://i.vimeocdn.com/video/1537335077-36ef5ccf6a0dfea7ecb537b515b73235cd98d968557f3f92e33020703bd9dd8e-d_640x360?r=pad"
+                    },
+                    "video_size": {
+                      "type": "string",
+                      "description": "영상 크기",
+											"example": "10MB"
+                    },
+                    "video_duration": {
+                      "type": "string",
+                      "description": "영상 길이 (초)",
+											"example": "357"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "number",
+                    "description": "게시물 아이디",
+										"example" : 100000
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getAigees": {
+        "post": {
+          "tags": [ "1.13 숏폼 상세" ],
+          "summary": "숏폼 상세",
+          "description": "숏폼 상세",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getKeywords": {
+        "post": {
+          "tags": [ "1.14 검색 정보" ],
+          "summary": "검색 정보",
+          "description": "검색 정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {
+                      "todayList": 		[],
+                      "totalList": 		[]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getSearchData": {
+        "post": {
+          "tags": [ "1.15 숏폼 상세" ],
+          "summary": "숏폼 상세",
+          "description": "숏폼 상세",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "keyword", "tag", "tabindex", "lastPostId", "userId" ],
+                  "properties": {
+                    "keyword": {
+                      "type": "string",
+                      "description": "검색어",
+											"example": "검색어"
+                    },
+                    "tag": {
+                      "type": "string",
+                      "description": "태그",
+											"example": "#골프"
+                    },
+                    "tabindex": {
+                      "type": "number",
+                      "description": "탭 아이디",
+											"example": "1"
+                    },
+                    "lastPostId": {
+                      "type": "number",
+                      "description": "노출된 마지막 게시물 아이디",
+											"example": "100000"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getUserProfile": {
+        "post": {
+          "tags": [ "1.16 회원 프로필정보" ],
+          "summary": "회원 프로필정보",
+          "description": "회원 프로필정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id", "platform" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100001"
+                    },
+                    "platform": {
+                      "type": "string",
+                      "description": "A: android, I: ios ",
+											"example": "A"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getUserPosts": {
+        "post": {
+          "tags": [ "1.17 회원의 게시물 목록" ],
+          "summary": "회원의 게시물 목록",
+          "description": "회원의 게시물 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id", "type, id, keyword" ],
+                  "properties": {
+                    "keyword": {
+                      "type": "string",
+                      "description": "검색어",
+											"example": "검색어"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100001"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "값이 있으면 정상적으로 업로드 된 게시물만 노출됨",
+											"example": "1"
+                    },
+                    "id": {
+                      "type": "number",
+                      "description": "노출된 마지막 게시물 아이디",
+											"example": "100000"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/getMyFollowers": {
+        "post": {
+          "tags": [ "1.18 나의 팔로워 목록" ],
+          "summary": "나의 팔로워 목록",
+          "description": "나의 팔로워 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id", "type" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100001"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "1: 팔로잉, 0: 팔로워",
+											"example": "1"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/previewChat": {
+        "post": {
+          "tags": [ "1.19 ChatGPT크롤링" ],
+          "summary": "공유된 ChatGPT데이터 불러오기",
+          "description": "공유된 ChatGPT데이터 불러오기",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "url" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "url",
+                      "description": "공유된 ChatGPT 링크",
+											"example": "https://chat.openai.com/share/c3004f45-2aca-4785-9cae-b16ab871692d"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "text",
+                    "description": "응답 결과",
+										"example" : "html data"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/fetchTriggerList": {
+        "post": {
+          "tags": [ "1.20 태그, 멘션데이터 불러오기" ],
+          "summary": "태그, 멘션데이터 불러오기",
+          "description": "태그, 멘션데이터 불러오기",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "content" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "content",
+                      "description": "키워드",
+											"example": "키워드"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : {
+                      "mentionList": [],
+                      "tagList":     ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      
+      "/auth/updateMyInfo": {
+        "post": {
+          "tags": [ "2.1 나의정보 업데이트" ],
+          "summary": "나의정보 업데이트",
+          "description": "나의정보 업데이트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "field", "data", "userId" ],
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "description": "필드명",
+											"example": "nickname"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "값",
+											"example": "111"
+                    },
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/checkMemberStatus": {
+        "post": {
+          "tags": [ "2.2 회원 중지 상태" ],
+          "summary": "회원 중지 상태",
+          "description": "회원 중지 상태",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "number",
+                    "description": "응답 결과",
+										"example" : 0
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getBadgeCnt": {
+        "post": {
+          "tags": [ "2.3 알림뱃지수" ],
+          "summary": "알림뱃지수",
+          "description": "알림뱃지수",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "number",
+                    "description": "응답 결과",
+										"example" : 0
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateFollowing": {
+        "post": {
+          "tags": [ "2.4 팔로잉 업데이트" ],
+          "summary": "팔로잉 업데이트",
+          "description": "팔로잉 업데이트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id", "follow_id" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "follow_id": {
+                      "type": "string",
+                      "description": "팔로우 아이디",
+											"example": "11"
+                    },
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateBookmark": {
+        "post": {
+          "tags": [ "2.5 북마크 업데이트" ],
+          "summary": "북마크 업데이트",
+          "description": "북마크 업데이트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "id", "bookmark_id", "type", "thumb", "prompt", "prompt_idx" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    },
+                    "bookmark_id": {
+                      "type": "string",
+                      "description": "북마크 아이디",
+											"example": "11"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "1: post, 2: prompt",
+											"example": "1"
+                    },
+                    "thumb": {
+                      "type": "string",
+                      "description": "썸네일",
+											"example": "202306/37c2aa48825982b85459f0e28e0d6447.png"
+                    },
+                    "prompt": {
+                      "type": "object",
+                      "description": "프롬프트",
+											"example": "{}"
+                    },
+                    "prompt_idx": {
+                      "type": "number",
+                      "description": "프롬프트 아이디",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addReport": {
+        "post": {
+          "tags": [ "2.6 신고" ],
+          "summary": "신고",
+          "description": "신고",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id", "id", "type", "reason", "reason_txt", "recmt" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "description": "신고대상 회원 아이디",
+											"example": "1000001"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "1: 게시글, 2: 댓글",
+											"example": "1"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "description": "1: 광고/홍보/허위 게시물, 2: 불쾌감을 주는 언행(욕설,음란,비방 등), 3: 스팸 게시물, 4: 기타(신고 사유 작성)",
+											"example": "1"
+                    },
+                    "reason_txt": {
+                      "type": "string",
+                      "description": "기타 사유",
+											"example": "기타 사유"
+                    },
+                    "recmt": {
+                      "type": "number",
+                      "description": "1: 대댓글 신고",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addBlacklist": {
+        "post": {
+          "tags": [ "2.7 블랙리스트" ],
+          "summary": "블랙리스트",
+          "description": "블랙리스트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "user_id" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "description": "대상 회원 아이디",
+											"example": "1000001"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addShare": {
+        "post": {
+          "tags": [ "2.8 공유" ],
+          "summary": "공유",
+          "description": "공유",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "id" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "1000001"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateLike": {
+        "post": {
+          "tags": [ "2.9 좋아요/싫어요" ],
+          "summary": "좋아요/싫어요",
+          "description": "좋아요/싫어요",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "id", "like_id", "dislike_id", "type", "like" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100000"
+                    },
+                    "like_id": {
+                      "type": "string",
+                      "description": "좋아요 아이디",
+											"example": "11"
+                    },
+                    "dislike_id": {
+                      "type": "string",
+                      "description": "싫어요 아이디",
+											"example": "1"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "1: post, 2: comment, 3: recomment",
+											"example": "1"
+                    },
+                    "like": {
+                      "type": "number",
+                      "description": "1: like, 2: dislike",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/deletePost": {
+        "post": {
+          "tags": [ "2.10 게시물 삭제" ],
+          "summary": "게시물 삭제",
+          "description": "게시물 삭제",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "id" ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "1000001"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addComment": {
+        "post": {
+          "tags": [ "2.11 댓글 추가" ],
+          "summary": "댓글 추가",
+          "description": "댓글 추가",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "cmtId", "postId", "comment", "commentId", "commentId2", "cmtType" ],
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "cmtId": {
+                      "type": "string",
+                      "description": "댓글 아이디",
+											"example": "100000"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100001"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "description": "댓글",
+											"example": "댓글"
+                    },
+                    "commentId": {
+                      "type": "string",
+                      "description": "댓글 아이디",
+											"example": "10000"
+                    },
+                    "commentId2": {
+                      "type": "number",
+                      "description": "대댓글에 대한 댓글인 경우, 해당 대댓글의 아이디",
+											"example": "10000"
+                    },
+                    "cmtType": {
+                      "type": "number",
+                      "description": "1: 게시물에 댓글, commentId2 값이 있으면, 대댓글에 대한 댓글",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/deleteCmt": {
+        "post": {
+          "tags": [ "2.12 댓글 삭제" ],
+          "summary": "댓글 삭제",
+          "description": "댓글 삭제",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "id", "cmtType" ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "1000001"
+                    },
+                    "cmtType": {
+                      "type": "string",
+                      "description": "2: 댓글, 3: 대댓글",
+											"example": "2"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getPostData": {
+        "post": {
+          "tags": [ "2.13 게시물 정보" ],
+          "summary": "게시물 정보",
+          "description": "게시물 정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "postId", "userId" ],
+                  "properties": {
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100001"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateChatGPTPost": {
+        "post": {
+          "tags": [ "2.14 chatGPT 게시물 등록" ],
+          "summary": "chatGPT 게시물 등록",
+          "description": "chatGPT 게시물 등록",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "postId", "title", "chatgpt" ],
+                  "properties": {
+                    "postId": {
+                      "type": "string",
+                      "description": "게시물 아이디",
+											"example": "100001"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "게시물 제목",
+											"example": "게시물 제목"
+                    },
+                    "chatgpt": {
+                      "type": "object",
+                      "description": "chatGPT 대화 내용",
+											"example": "{}"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+
+      "/auth/getBookmarks": {
+        "post": {
+          "tags": [ "2.15 bookmark 목록" ],
+          "summary": "bookmark 목록",
+          "description": "bookmark 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "type" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "type": {
+                      "type": "number",
+                      "description": "1: post, 2: prompt",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {
+                      "folderList": [],
+                      "postList":	  [],
+                      "promptList":	[]
+                    }
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getBookmarkByFId": {
+        "post": {
+          "tags": [ "2.16 bookmark 상세정보" ],
+          "summary": "bookmark 상세정보",
+          "description": "bookmark 상세정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "folderId" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "folderId": {
+                      "type": "number",
+                      "description": "폴더 아이디",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {
+                      "folderInfo": {},
+                      "dataList":	  []
+                    }
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getBookmarkFolderById": {
+        "post": {
+          "tags": [ "2.17 bookmark 폴더 상세정보" ],
+          "summary": "bookmark 폴더 상세정보",
+          "description": "bookmark 폴더 상세정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "folderId", "type" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "folderId": {
+                      "type": "number",
+                      "description": "폴더 아이디",
+											"example": "1"
+                    },
+                    "type": {
+                      "type": "number",
+                      "description": "1: 게시물, 2: prompt",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {
+                      "folderInfo":     {},
+                      "bookmarkList":	  []
+                    }
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateFolder": {
+        "post": {
+          "tags": [ "2.18 bookmark 폴더 업데이트" ],
+          "summary": "bookmark 폴더 업데이트",
+          "description": "bookmark 폴더 업데이트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "userId", "folderId", "type", "book_ids", "folder_name" ],
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    },
+                    "folderId": {
+                      "type": "number",
+                      "description": "폴더 아이디",
+											"example": "1"
+                    },
+                    "type": {
+                      "type": "number",
+                      "description": "1: 게시물, 2: prompt",
+											"example": "1"
+                    },
+                    "book_ids": {
+                      "type": "string",
+                      "description": "북마크 아이디 목록",
+											"example": "1,2,3"
+                    },
+                    "folder_name": {
+                      "type": "string",
+                      "description": "폴더명",
+											"example": "폴더명"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/deleteFolder": {
+        "post": {
+          "tags": [ "2.19 폴더 삭제" ],
+          "summary": "폴더 삭제",
+          "description": "폴더 삭제",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "folderId", "userId" ],
+                  "properties": {
+                    "folderId": {
+                      "type": "string",
+                      "description": "폴더 아이디",
+											"example": "1000001"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getMyInfo": {
+        "post": {
+          "tags": [ "2.20 나의 정보" ],
+          "summary": "나의 정보",
+          "description": "나의 정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "platform", "userId" ],
+                  "properties": {
+                    "platform": {
+                      "type": "string",
+                      "description": "A: android, I: ios",
+											"example": "A"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "description": "회원 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {}
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getNotice": {
+        "post": {
+          "tags": [ "2.21 공지사항 목록" ],
+          "summary": "공지사항 목록",
+          "description": "공지사항 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getNoticeById": {
+        "post": {
+          "tags": [ "2.22 공지사항 상세" ],
+          "summary": "공지사항 상세",
+          "description": "공지사항 상세",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "id" ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "공지사항 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {}
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updatePass": {
+        "post": {
+          "tags": [ "2.23 비밀번호 변경" ],
+          "summary": "비밀번호 변경",
+          "description": "비밀번호 변경",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "oldpassword", "password" ],
+                  "properties": {
+                    "oldpassword": {
+                      "type": "string",
+                      "description": "이전 비밀번호",
+											"example": "123456"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "새 비밀번호",
+											"example": "123456"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/memberExit": {
+        "post": {
+          "tags": [ "2.24 회원 탈퇴" ],
+          "summary": "회원 탈퇴",
+          "description": "회원 탈퇴",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getMyContents": {
+        "post": {
+          "tags": [ "2.25 좋아요 게시물" ],
+          "summary": "좋아요 게시물",
+          "description": "좋아요 게시물",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "type" ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "1 ? '좋아요 게시물' : '댓글단 게시물'",
+											"example": "1"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getBlackList": {
+        "post": {
+          "tags": [ "2.26 차단 회원 목록" ],
+          "summary": "차단 회원 목록",
+          "description": "차단 회원 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/updateBlackList": {
+        "post": {
+          "tags": [ "2.27 차단 회원 변경" ],
+          "summary": "차단 회원 변경",
+          "description": "차단 회원 변경",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "user_id", "black_id" ],
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "description": "차단 회원 아이디",
+											"example": "100000"
+                    },
+                    "black_id": {
+                      "type": "string",
+                      "description": "blacklist 아이디",
+											"example": "12"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getFaqs": {
+        "post": {
+          "tags": [ "2.28 FAQ" ],
+          "summary": "FAQ 목록",
+          "description": "FAQ 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "description": "응답 결과",
+										"example" : {
+                      "faqKindList": 	[],
+                      "faqList": 		  []
+                    }
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/setFaqHits": {
+        "post": {
+          "tags": [ "2.29 FAQ 조회수 업데이트" ],
+          "summary": "FAQ 조회수 업데이트",
+          "description": "FAQ 조회수 업데이트",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "faq_id" ],
+                  "properties": {
+                    "faq_id": {
+                      "type": "string",
+                      "description": "FAQ 아이디",
+											"example": "12"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/sendImprove": {
+        "post": {
+          "tags": [ "2.30 개선사항 등록" ],
+          "summary": "개선사항 등록",
+          "description": "개선사항 등록",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "content" ],
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "개선사항",
+											"example": "개선사항"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getMyPosts": {
+        "post": {
+          "tags": [ "2.31 나의 게시물" ],
+          "summary": "나의 게시물",
+          "description": "나의 게시물",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "type", "id" ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "1: 동영상, 2: 이미지, 3: 텍스트",
+											"example": "1"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "노출된 마지막 게시물 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getAlarmList": {
+        "post": {
+          "tags": [ "2.32 나의 알림 목록" ],
+          "summary": "나의 알림 목록",
+          "description": "나의 알림 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/delAlarm": {
+        "post": {
+          "tags": [ "2.33 알림 삭제" ],
+          "summary": "알림 삭제",
+          "description": "알림 삭제",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "id" ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "알림 아이디",
+											"example": "100000"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getUserFollowers": {
+        "post": {
+          "tags": [ "2.34 나의 팔로워 목록" ],
+          "summary": "나의 팔로워 목록",
+          "description": "나의 팔로워 목록",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/stripeCreateSubscription": {
+        "post": {
+          "tags": [ "2.35 Stripe결제 인증정보" ],
+          "summary": "Stripe결제 인증정보",
+          "description": "Stripe결제 인증정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "name", "email", "paymentMethod" ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "회원 이름",
+											"example": "홍길동"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "이메일",
+											"example": "test@naver.com"
+                    },
+                    "paymentMethod": {
+                      "type": "string",
+                      "description": "결제 방식",
+											"example": "card"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addStripePayment": {
+        "post": {
+          "tags": [ "2.36 Stripe결제 완료" ],
+          "summary": "Stripe결제 완료",
+          "description": "Stripe결제 완료",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "pay_type", "order_id", "amount" ],
+                  "properties": {
+                    "subscription_id": {
+                      "type": "string",
+                      "description": "구독 아이디",
+											"example": "sub_1NcpVGBzyfm8h33wOE6VL2VS"
+                    },
+                    "order_id": {
+                      "type": "string",
+                      "description": "주문 아이디",
+											"example": "123456"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "description": "결제 금액",
+											"example": "3"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/addInAppPayment": {
+        "post": {
+          "tags": [ "2.37 인앱결제 완료" ],
+          "summary": "인앱결제 완료",
+          "description": "인앱결제 완료",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "pay_type", "order_id", "receipt" ],
+                  "properties": {
+                    "pay_type": {
+                      "type": "string",
+                      "description": "결제 형식, A: apple, G: google, S: Stripe",
+											"example": "A"
+                    },
+                    "order_id": {
+                      "type": "string",
+                      "description": "주문 아이디",
+											"example": "123456"
+                    },
+                    "receipt": {
+                      "type": "string",
+                      "description": "영수증",
+											"example": "312131326545646"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/getPayData": {
+        "post": {
+          "tags": [ "2.38 나의 결제정보" ],
+          "summary": "나의 결제정보",
+          "description": "나의 결제정보",
+          "operationId": "",
+          "requestBody": {
+            "content": {},
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "description": "응답 결과",
+										"example" : []
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/stripeCheckoutSessionID": {
+        "post": {
+          "tags": [ "2.39 Stripe구독" ],
+          "summary": "Stripe구독세션아이디 검사 및 결제 완료처리",
+          "description": "Stripe구독세션아이디 검사후 결제 성공이면 결제처리",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "sessionID", "email" ],
+                  "properties": {
+                    "sessionID": {
+                      "type": "string",
+                      "description": "구독세션아이디",
+											"example": "1NcpVGBzyfm8h33wOE6VL2VS..."
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "이메일",
+											"example": "test@naver.com"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      },
+      "/auth/stripeCancelSubscription": {
+        "post": {
+          "tags": [ "2.40 구독취소하기" ],
+          "summary": "구독취소하기",
+          "description": "구독취소하기",
+          "operationId": "",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [ "payId", "subscriptionId", "pay_type", "next_month" ],
+                  "properties": {
+                    "payId": {
+                      "type": "string",
+                      "description": "결제 아이디",
+											"example": "1000"
+                    },
+                    "subscriptionId": {
+                      "type": "string",
+                      "description": "구독 아이디",
+											"example": "sub_1NcpVGBzyfm8h33wOE6VL2VS"
+                    },
+                    "pay_type": {
+                      "type": "string",
+                      "description": "결제 형식, A: apple, G: google, S: Stripe",
+											"example": "A"
+                    },
+                    "next_month": {
+                      "type": "string",
+                      "description": "구독 해지될 일자",
+											"example": "2023-09-11"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "성공시",
+              "content":{
+                "application/json": {
+                  "schema": {
+                    "type": "boolean",
+                    "description": "응답 결과",
+										"example" : true
+                  }
+                }
+              }
+            }
+          },
+					"security": [
+						{
+							"accessId": [],
+							"accessToken": []
+						}
+					]
+        }
+      }
+
+    }
+  }
